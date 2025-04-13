@@ -1,0 +1,71 @@
+.root {
+    /* Dark Theme Variables */
+    -fx-base-color: #1E1E2F;
+    -fx-primary-color: #14B8A6;
+    -fx-accent-color: #8B5CF6;
+    -fx-text-color: #F3F4F6;
+    -fx-card-bg: #2D2D44;
+    -my-border-color: #3F3F5B;
+    -fx-hover-color: #7C4DFF;
+
+    -fx-background-color: -fx-base-color;
+
+
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.vbox {
+    -fx-spacing: 10;
+    -fx-pref-width: 300;
+    -fx-pref-height: 200;
+    -fx-padding: 50;
+    -fx-border-radius: 10;
+    -fx-border-color: -my-border-color;
+}
+.label{
+    -fx-text-fill: -fx-text-color;
+    -fx-font-size: 20px;
+    -fx-padding: 10 0 0 0;
+}
+.text-field{
+    -fx-background-color: -fx-card-bg;
+    -fx-text-fill: -fx-text-color;
+    -fx-border-color: -my-border-color;
+    -fx-border-radius: 5;
+    -fx-padding: 10 20 10 20;
+}
+.button{
+    -fx-background-color: -fx-accent-color;
+    -fx-text-fill: -fx-text-color;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+.button:hover {
+    -fx-background-color: -fx-hover-color;  /* Hex color without transparency */
+    -fx-opacity: 0.5;  /* Apply 50% transparency to the entire button */
+}
+
+
+
+.context-menu {
+    -fx-background-color: -fx-card-bg;
+    -fx-border-color: -my-border-color;
+    -fx-border-radius: 5px;
+}
+
+.context-menu .menu-item {
+    -fx-background-color: -fx-hover-color;
+
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-color: -fx-accent-color;
+}
+.error-label{
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+    -fx-padding: 10 0 0 0;
+}
