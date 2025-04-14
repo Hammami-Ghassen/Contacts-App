@@ -57,6 +57,7 @@ public class LoginView {
         VBox.setMargin(buttonBox, new Insets(30, 0, 0, 0)); // top, right, bottom, left
     }
 
+
     public VBox getRoot() {
         return root;
     }
@@ -70,7 +71,17 @@ public class LoginView {
             String password = passwordField.getText();
 
             if (username.equals("admin") && password.equals("password")) {
-                errorLabel.setText("");
+                // Simulate successful login
+                Stage stage = (Stage) root.getScene().getWindow();
+                stage.close(); // Close the login window
+
+                view.MainApp mainApp = new view.MainApp();
+                mainApp.showContactView();// Pass an empty array as a placeholder
+                // Close the login window
+
+
+
+
                 System.out.println("Login successful!");
             } else {
                 errorLabel.setText("Invalid username or password");
