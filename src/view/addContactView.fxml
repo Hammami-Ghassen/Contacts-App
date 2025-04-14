@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="addContact" prefHeight="445.0" prefWidth="363.0" stylesheets="@/styles/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.addContactController">
+    <VBox layoutX="50.0" layoutY="30.0" prefWidth="300" spacing="15" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
+        <children>
+            <HBox alignment="TOP_CENTER" prefHeight="28.0" prefWidth="243.0">
+                <children>
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="New contact" />
+                </children>
+            </HBox>
+            <TextField fx:id="nameField" promptText="Name" />
+            <TextField fx:id="phoneField" promptText="Phone number" />
+            <TextField fx:id="emailField" promptText="Email" />
+            <HBox prefHeight="21.0" prefWidth="280.0" spacing="10">
+                <children>
+                    <ImageView fx:id="photoPreview" fitHeight="80" fitWidth="80" preserveRatio="true" />
+                    <Button contentDisplay="CENTER" onAction="#handleChoosePhoto" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: transparent;" text="Choose photo" />
+                </children>
+            </HBox>
+            <Button maxWidth="Infinity" text="Add contact" onAction="#addContact" />
+        </children>
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10" />
+        </padding>
+    </VBox>
+</AnchorPane>
