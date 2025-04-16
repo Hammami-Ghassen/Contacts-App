@@ -61,12 +61,12 @@
 }
 
 .context-menu .menu-item {
-    -fx-background-color: -fx-hover-color;
+    -fx-background-color: -fx-card-bg;
 
 }
 
 .context-menu .menu-item:hover {
-    -fx-background-color: -fx-accent-color;
+    -fx-background-color: -fx-hover-color;
 }
 .error-label{
     -fx-text-fill: red;

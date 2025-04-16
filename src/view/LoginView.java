@@ -7,6 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import static controller.ContactController.showContactView;
+
 public class LoginView {
 
     private final VBox root = new VBox(10);
@@ -58,6 +60,8 @@ public class LoginView {
     }
 
 
+
+
     public VBox getRoot() {
         return root;
     }
@@ -65,7 +69,7 @@ public class LoginView {
     public void eventsHandler() {
 
         loginButton.setDefaultButton(true);
-        boolean loginPressed = false; // Flag to track if the login button was pressed
+
         loginButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
@@ -74,9 +78,7 @@ public class LoginView {
                 // Simulate successful login
                 Stage stage = (Stage) root.getScene().getWindow();
                 stage.close(); // Close the login window
-
-                view.MainApp mainApp = new view.MainApp();
-                mainApp.showContactView();// Pass an empty array as a placeholder
+                showContactView();// Pass an empty array as a placeholder
                 // Close the login window
 
 

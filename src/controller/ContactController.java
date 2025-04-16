@@ -15,12 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.Contact;
 import model.ContactStorage;
+import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ContactController {
@@ -40,20 +42,32 @@ public class ContactController {
     public void initialize() {
         // Load all contacts only once
         loadAllContacts();
-
         // Show all contacts initially
         showContacts(allContacts);
-
+        System.out.println("All contacts loaded: " + allContacts.size());
         // Add a listener to filter contacts as the user types (if the TextField was linked correctly in FXML)
-        if (searchTextField != null) {
-            searchTextField.textProperty().addListener((observable, oldValue, newValue) -> filterContacts(newValue));
-        }
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterContacts(newValue);
+        });
+
     }
+
+
 
     // Loads contacts from storage and stores them in the allContacts list.
     private void loadAllContacts() {
         ContactStorage contactStorage = new ContactStorage();
-        allContacts = List.of(contactStorage.loadContacts());
+        Contact [] contacts = new Contact[contactStorage.loadContacts().length()];
+        for (int i = 0; i < contactStorage.loadContacts().length(); i++) {
+            JSONObject contactJson = contactStorage.loadContacts().getJSONObject(i);
+            Contact contact = new Contact(
+                    contactJson.getString("name"),
+                    contactJson.getString("phone"),
+                    contactJson.getString("email")
+            );
+            contacts[i] = contact;
+        }
+        allContacts = List.of(contacts);
     }
 
     // Filters the contacts based on the query and updates the FlowPane.
@@ -65,7 +79,7 @@ public class ContactController {
         if (query == null || query.trim().isEmpty()) {
             showContacts(allContacts);
         } else {
-            // Filter contacts by name (case insensitive)
+            // Filter contacts by name (case-insensitive)
             List<Contact> filtered = allContacts.stream()
                     .filter(contact -> contact.getName().toLowerCase().contains(query.toLowerCase()))
                     .collect(Collectors.toList());
@@ -74,7 +88,7 @@ public class ContactController {
     }
 
     // Utility method that adds a list of contacts to the FlowPane.
-    private void showContacts(List<Contact> contacts) {
+    public void showContacts(List<Contact> contacts) {
         for (Contact contact : contacts) {
             AnchorPane cardContainer = createContactCard(contact);
             updateContactCard(cardContainer);
@@ -82,7 +96,7 @@ public class ContactController {
     }
 
     // This method creates a single contact card (as an AnchorPane) for the given contact.
-    private AnchorPane createContactCard(Contact contact) {
+    public AnchorPane createContactCard(Contact contact) {
         // Outer AnchorPane (the card)
         AnchorPane cardContainer = new AnchorPane();
         cardContainer.setPrefSize(188, 150);
@@ -92,13 +106,15 @@ public class ContactController {
         MenuItem editItem = new MenuItem("Edit");
         MenuItem deleteItem = new MenuItem("Delete");
         ContextMenu cardContextMenu = new ContextMenu(editItem, deleteItem);
+        cardContextMenu.getStyleClass().add("context-menu");
+        deleteItem.getStyleClass().add("menu-item");
+        editItem.getStyleClass().add("menu-item");
 
         // Set actions for Edit and Delete
         editItem.setOnAction(e -> handleEditContact(contact));
         cardContextMenu.setAutoHide(true);
         // Use a local variable for this card container as it is needed in the delete handler.
-        AnchorPane currentCard = cardContainer;
-        deleteItem.setOnAction(e -> handleDeleteContact(contact, currentCard));
+        deleteItem.setOnAction(e -> handleDeleteContact(contact, cardContainer));
 
         // Menu button to trigger the context menu
         Image menuImg = new Image(ContactController.class.getResource("/icons/icons8-points-de-suspension-90.png").toExternalForm());
@@ -168,8 +184,7 @@ public class ContactController {
     // Handle the addition of a new contact (opens a new window)
     @FXML
     private void handleAddContact(ActionEvent event) throws Exception {
-        addContactController addContactController = new addContactController();
-        addContactController.start(new Stage());
+        showAddContactView();
     }
 
     // Edit contact handler
@@ -184,5 +199,43 @@ public class ContactController {
         contactStorage.deleteContact(contact.getName());
         flowPane.getChildren().remove(cardContainer);
         System.out.println("Deleted contact: " + contact.getName());
+    }
+
+    public List<Contact> getAllContacts() {
+        return allContacts;
+    }
+
+
+
+
+    /// show UI
+    public static void showAddContactView(){
+        try{
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ContactController.class.getResource("/view/addContactView.fxml")));
+            Parent root= loader.load();
+            loader.getController();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void showContactView() {
+        try{
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ContactController.class.getResource("/view/contactView.fxml")));
+            Parent root= loader.load();
+            loader.getController();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

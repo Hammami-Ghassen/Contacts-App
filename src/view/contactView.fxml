@@ -15,42 +15,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1000" styleClass="AnchorPane$" stylesheets="@/styles/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ContactController">
-    <children>
-        <TextField fx:id="searchTextField" layoutX="45.0" layoutY="32.0" prefHeight="32.0" prefWidth="397.0" promptText="Rechercher..." />
-        <Button layoutX="442.0" layoutY="24.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="54.0" >
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-            <graphic>
-                <ImageView  fitHeight="42.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                    <image>
-                        <Image url="/icons/icons8-chercher-100.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button onAction="#handleAddContact" layoutX="496.0" layoutY="27.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="49.0">
+<AnchorPane prefHeight="850.0" prefWidth="1000" styleClass="AnchorPane" stylesheets="@/styles/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ContactController">
+
+        <TextField fx:id="searchTextField" layoutX="45.0" layoutY="32.0" prefHeight="32.0" prefWidth="397.0" promptText="Recherche..." />
+        <Button onAction="#handleAddContact" layoutX="450" layoutY="27.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="49.0">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
             <graphic>
                 <ImageView fitHeight="37.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
+
                         <Image url="/icons/icons8-ajouter-un-téléphone-100.png" />
-                    </image>
+
                 </ImageView>
             </graphic>
         </Button>
       <FlowPane hgap="20.0" layoutX="14.0" layoutY="115.0" prefHeight="649.0" prefWidth="866.0" vgap="15.0" fx:id="flowPane" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
-         <children>
 
-
-         </children>
       </FlowPane>
 
-    </children>
+
 </AnchorPane>

@@ -49,9 +49,18 @@
     -fx-cursor: hand;
 }
 
-#card_drop_menu {
+
+
+.context-menu {
     -fx-background-color: -fx-card-bg;
     -fx-border-color: -my-border-color;
     -fx-border-radius: 5px;
+}
 
+.context-menu .menu-item {
+    -fx-background-color: -fx-card-bg;
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-color: -fx-hover-color;
 }

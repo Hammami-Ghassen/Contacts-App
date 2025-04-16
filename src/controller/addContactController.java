@@ -22,26 +22,10 @@ import java.util.Objects;
 
 
 
-public class addContactController extends Application {
-
-
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        try{
-            Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/addContactView.fxml")));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
+public class addContactController  {
 
     public ContactStorage contactModel=new ContactStorage();
+    ContactController contactController = new ContactController();
     private String imagePath;
 
     /// images handler
@@ -61,16 +45,20 @@ public class addContactController extends Application {
     private TextField emailField;
 
     /// images handler
+    /// TODO: add image path to the contact model
 
 
     @FXML
     private void addContact() {
+
         Contact contact = new Contact(nameField.getText(), phoneField.getText(), emailField.getText());
         contactModel.saveContact(contact.toJson());
+        FXMLLoader contactLoader=new FXMLLoader(getClass().getResource("/view/contactView.fxml"));
+        ContactController contactController = contactLoader.getController();
+
         nameField.clear();
         phoneField.clear();
         emailField.clear();
-
         photoPreview.setImage(null);
     }
 
