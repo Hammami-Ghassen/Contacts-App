@@ -113,15 +113,32 @@ public class ContactController {
         AddContactController addContactController = loader.getController();
         stage.show();
         addContactController.button.setOnAction(event -> {
-            Contact contact = new Contact(addContactController.nameField.getText(), addContactController.phoneField.getText(), addContactController.emailField.getText());
+            String name = addContactController.nameField.getText();
+            String phone = addContactController.phoneField.getText();
+            String email = addContactController.emailField.getText();
+
+            // Validation des champs
+            if (name == null || name.trim().isEmpty()) {
+                addContactController.setErrorLabel("Le nom est obligatoire.");
+                return;
+            }
+            if (phone == null || phone.trim().isEmpty()) {
+                addContactController.setErrorLabel("Le numéro de téléphone est obligatoire.");
+                return;
+            }
+            if (email == null || email.trim().isEmpty() || !email.contains("@")) {
+                addContactController.setErrorLabel("L'adresse e-mail est invalide.");
+                return;
+            }
+
+            // Si tout est valide, créer et sauvegarder le contact
+            Contact contact = new Contact(name, phone, email);
             ContactStorage contactStorage = new ContactStorage();
             contactStorage.saveContact(contact);
             flowPane.getChildren().clear();
             showContacts(contactStorage.loadContacts());
             stage.close();
         });
-
-
 
     }
 
@@ -158,21 +175,40 @@ public class ContactController {
 
         // Set the action for the "Save" button
         addContactController.button.setOnAction(event -> {
-            contact.setName(addContactController.nameField.getText());
-            contact.setPhone(addContactController.phoneField.getText());
-            contact.setEmail(addContactController.emailField.getText());
+            String name = addContactController.nameField.getText();
+            String phone = addContactController.phoneField.getText();
+            String email = addContactController.emailField.getText();
+
+            // Validation des champs
+            if (name == null || name.trim().isEmpty()) {
+                addContactController.setErrorLabel("Le nom est obligatoire.");
+                return;
+            }
+            if (phone == null || phone.trim().isEmpty() || !phone.matches("\\d{8}")) {
+                addContactController.setErrorLabel("Le numéro de téléphone doit contenir 10 chiffres.");
+                return;
+            }
+            if (email == null || email.trim().isEmpty() || !email.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                addContactController.setErrorLabel("L'adresse e-mail est invalide.");
+                return;
+            }
+
+            // Mise à jour des informations du contact
+            contact.setName(name);
+            contact.setPhone(phone);
+            contact.setEmail(email);
             ContactStorage contactStorage = new ContactStorage();
             List<Contact> contacts = contactStorage.loadContacts();
-            // Store the original name before editing
             String originalName = contact.getName();
 
-            // Update the contact in the storage using the original name
+            // Mise à jour du contact dans le stockage
             for (int i = 0; i < contacts.size(); i++) {
                 if (contacts.get(i).getName().equalsIgnoreCase(originalName)) {
                     contacts.set(i, contact);
                     break;
                 }
             }
+
 
 
             // Save the updated list back to storage
@@ -193,6 +229,11 @@ public class ContactController {
         });
 
 
+    }
+
+    public void handleExit(ActionEvent event) {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
 
@@ -285,5 +326,6 @@ public class ContactController {
             flowPane.getChildren().add(cardContainer);
         }
     }
+
 
 }

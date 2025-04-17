@@ -1,32 +1,5 @@
-[
-    {
-        "phone": "ghas",
-        "name": "ghassen",
-        "email": "ss"
-    },
-    {
-        "phone": "sa",
-        "name": "df",
-        "email": ""
-    },
-    {
-        "phone": "",
-        "name": "aw",
-        "email": ""
-    },
-    {
-        "phone": "",
-        "name": "adzd",
-        "email": ""
-    },
-    {
-        "phone": "4",
-        "name": "Louay",
-        "email": ""
-    },
-    {
-        "phone": "",
-        "name": "as",
-        "email": ""
-    }
-]
+[{
+    "phone": "25252525",
+    "name": "ghassen",
+    "email": "test@test.com"
+}]

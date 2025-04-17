@@ -30,6 +30,18 @@
             </ImageView>
         </graphic>
     </Button>
+    <Button onAction="#handleExit" layoutX="950" layoutY="5" mnemonicParsing="false" prefHeight="12" prefWidth="30">
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+        <graphic>
+            <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+
+                <Image url="/icons/x.png" />
+
+            </ImageView>
+        </graphic>
+    </Button>
     <FlowPane hgap="20.0" layoutX="14.0" layoutY="115.0" prefHeight="649.0" prefWidth="866.0" vgap="15.0" fx:id="flowPane" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
 
     </FlowPane>

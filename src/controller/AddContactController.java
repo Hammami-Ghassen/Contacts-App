@@ -22,6 +22,7 @@ public class AddContactController {
     /// handle the add contact button
     public ContactStorage contactModel=new ContactStorage();
 
+
     @FXML
     TextField nameField;
     @FXML
@@ -32,6 +33,8 @@ public class AddContactController {
     private Label header;
     @FXML
     Button button;
+    @FXML
+    Label errorLabel;
 
 
     public void setNameField(String name) {
@@ -54,5 +57,8 @@ public class AddContactController {
 
     public void setButtonId(String editContact) {
         this.button.setId(editContact);
+    }
+    public void setErrorLabel(String error) {
+        this.errorLabel.setText(error);
     }
 }

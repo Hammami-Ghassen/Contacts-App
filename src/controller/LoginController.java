@@ -8,7 +8,7 @@ import static controller.ContactController.showContactView;
 
 public class LoginController {
     public static void handleLoginButton(String username, String password, Stage currentStage, LoginView loginView) {
-        if (username.equals("") && password.equals("")) {
+        if (username.equals("admin") && password.equals("1234")) {
             currentStage.close();
             showContactView();
             System.out.println("Login successful!");
@@ -19,14 +19,6 @@ public class LoginController {
 
 
 
-
-
-
-
-
-
-
-//
 
      // Flag to track if the login button was pressed
 

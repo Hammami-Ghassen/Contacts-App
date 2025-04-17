@@ -5,34 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62d07a98-316c-4eb1-af34-cfb1d57a92f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/fxml/contactView.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Contacts-App.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Contacts-App.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contacts.json" beforeDir="false" afterPath="$PROJECT_DIR$/contacts.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/052a92a0-1c6c-4029-93c9-982d170dab58_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/1b9676c5-17bc-406a-97a9-f744a593056e_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/3929e821-20c0-482a-9589-b834ca60b8e1_Capture d'écran 2024-11-28 183444.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/3f8937c4-63d3-4cec-9fcc-d85d87165299_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/4698ef6a-42ef-4b62-b052-ace0d1de4215_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/7ac0fe68-f226-4d9a-afb4-e4fa36d37384_Capture d'écran 2024-11-28 183444.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/9cb99083-eff3-4ea3-87b3-d294ce1af51d_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/a73f4b53-8db0-4459-aa8c-a1c2b859a823_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/c50717ac-5598-46fa-b91a-aa16df35b2cb_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/c684c53a-9a77-461e-92fa-8bc876e4479f_SX.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/photos/f7ddcecb-c9a6-43fa-858c-ed1e74a78612_Capture d'écran 2024-11-27 234422.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/fxml/addContactView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/fxml/addContactView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/fxml/contactView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/fxml/contactView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/AddContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AddContactController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/ContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ContactController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/addContactController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Contact.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/ContactStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/ContactStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/UserStorage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/addContactView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/fxml/addContactView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/contactView.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/LoginController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +22,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2vpuV4gNi6c3YXSIKJ39oVT5sNX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -56,6 +36,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/user/Desktop/9raya/java/Contacts-App",
     "node.js.detected.package.eslint": "true",
@@ -96,6 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1744854357126</updated>
       <workItem from="1744854358304" duration="766000" />
+      <workItem from="1744881227387" duration="4309000" />
     </task>
     <servers />
   </component>

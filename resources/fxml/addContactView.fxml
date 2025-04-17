@@ -13,7 +13,7 @@
     <VBox layoutX="50.0" layoutY="30.0" prefWidth="300" spacing="15" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
         <children>
             <HBox alignment="TOP_CENTER" prefHeight="28.0" prefWidth="243.0">
-                <Label fx:id="header" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="New contact"/>
+                <Label fx:id="header" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="New contact" />
             </HBox>
             <TextField fx:id="nameField" promptText="Name" />
             <TextField fx:id="phoneField" promptText="Phone number" />
@@ -21,13 +21,16 @@
             <HBox prefHeight="21.0" prefWidth="280.0" spacing="10">
                 <children>
                     <ImageView fx:id="photoPreview" fitHeight="80" fitWidth="80" preserveRatio="true" />
-                    <Button contentDisplay="CENTER"  prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: transparent;" text="Choose photo" />
+                    <Button contentDisplay="CENTER" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: transparent;" text="Choose photo" />
                 </children>
             </HBox>
-            <Button fx:id="button" maxWidth="Infinity" text="Add contact"  />
+            <Button fx:id="button" maxWidth="Infinity" text="Add contact" />
+         <Label fx:id="errorLabel" prefHeight="29.0" prefWidth="243.0" styleClass="error-label" />
         </children>
         <padding>
             <Insets bottom="10" left="10" right="10" top="10" />
         </padding>
+
+
     </VBox>
 </AnchorPane>
