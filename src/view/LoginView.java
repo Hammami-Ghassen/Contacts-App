@@ -3,13 +3,14 @@ package view;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import static controller.ContactController.showContactView;
+import static controller.LoginController.handleLoginButton;
 
 public class LoginView {
+
+    ///  Building the login view UI
 
     private final VBox root = new VBox(10);
     private final TextField usernameField = new TextField();
@@ -59,57 +60,34 @@ public class LoginView {
         VBox.setMargin(buttonBox, new Insets(30, 0, 0, 0)); // top, right, bottom, left
     }
 
+    /// Show login view UI
+    public void showLoginView() {
+        try {
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/styles/login.css").toExternalForm());
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            eventsHandler(stage);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-
+    public void eventsHandler(Stage stage) {
+        loginButton.setDefaultButton(true);
+        loginButton.setOnAction(e -> {
+            handleLoginButton(usernameField.getText(), passwordField.getText(), stage, this);
+        });
+    }
+    public Label getErrorLabel() {
+        return errorLabel;
+    }
 
     public VBox getRoot() {
         return root;
     }
-
-    public void eventsHandler() {
-
-        loginButton.setDefaultButton(true);
-
-        loginButton.setOnAction(e -> {
-            String username = usernameField.getText();
-            String password = passwordField.getText();
-
-            if (username.equals("admin") && password.equals("password")) {
-                // Simulate successful login
-                Stage stage = (Stage) root.getScene().getWindow();
-                stage.close(); // Close the login window
-                showContactView();// Pass an empty array as a placeholder
-                // Close the login window
-
-
-
-
-                System.out.println("Login successful!");
-            } else {
-                errorLabel.setText("Invalid username or password");
-            }
-        });
-
-        root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                loginButton.fire();
-
-            }
-        });
-
-        usernameField.setOnKeyReleased(e -> {
-            if (e.getCode() != KeyCode.ENTER) {
-                errorLabel.setText("");
-            }
-        });
-
-        passwordField.setOnKeyReleased(e -> {
-            if (e.getCode() != KeyCode.ENTER) {
-                errorLabel.setText("");
-            }
-        });
-    }
-
 
 
 

@@ -18,14 +18,19 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Contact;
 import model.ContactStorage;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ContactController {
+
 
     // The FlowPane where all the contact cards are displayed
     @FXML
@@ -35,67 +40,163 @@ public class ContactController {
     @FXML
     private TextField searchTextField;
 
-    // Store all contacts loaded from the JSON file
-    private List<Contact> allContacts = new ArrayList<>();
 
-    @FXML
-    public void initialize() {
-        // Load all contacts only once
-        loadAllContacts();
-        // Show all contacts initially
-        showContacts(allContacts);
-        System.out.println("All contacts loaded: " + allContacts.size());
-        // Add a listener to filter contacts as the user types (if the TextField was linked correctly in FXML)
+
+
+    /// Show ContactView UI
+    public static void showContactView() {
+        try{
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(ContactController.class.getResource("/fxml/ContactView.fxml"));
+            Parent root= loader.load();
+            loader.getController();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///  initialize
+    public void initialize(){
+        showContacts(new ContactStorage().loadContacts());
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filterContacts(newValue);
         });
+    }
+
+
+    ///getters and setters
+    public FlowPane getFlowPane() {
+        return flowPane;
+    }
+
+
+
+
+
+   /// handlers
+    //handle search
+   private void filterContacts(String query) {
+       // Clear existing cards in the UI.
+       flowPane.getChildren().clear();
+       List <Contact> allContacts = new ContactStorage().loadContacts();
+       // When query is empty, show all contacts.
+       if (query == null || query.trim().isEmpty()) {
+           showContacts(allContacts);
+       } else {
+           // Filter contacts by name (case-insensitive)
+           List<Contact> filtered = allContacts.stream()
+                   .filter(contact -> contact.getName().toLowerCase().contains(query.toLowerCase()))
+                   .collect(Collectors.toList());
+           showContacts(filtered);
+       }
+   }
+
+
+   //handle add contact button
+
+    public void handleAddContact() {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ContactController.class.getResource("/fxml/AddContactView.fxml")));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        AddContactController addContactController = loader.getController();
+        stage.show();
+        addContactController.button.setOnAction(event -> {
+            Contact contact = new Contact(addContactController.nameField.getText(), addContactController.phoneField.getText(), addContactController.emailField.getText());
+            ContactStorage contactStorage = new ContactStorage();
+            contactStorage.saveContact(contact);
+            flowPane.getChildren().clear();
+            showContacts(contactStorage.loadContacts());
+            stage.close();
+        });
+
+
 
     }
 
 
 
-    // Loads contacts from storage and stores them in the allContacts list.
-    private void loadAllContacts() {
+    // Delete contact handler: remove from storage and UI.
+    private void handleDeleteContact(Contact contact, AnchorPane cardContainer) {
         ContactStorage contactStorage = new ContactStorage();
-        Contact [] contacts = new Contact[contactStorage.loadContacts().length()];
-        for (int i = 0; i < contactStorage.loadContacts().length(); i++) {
-            JSONObject contactJson = contactStorage.loadContacts().getJSONObject(i);
-            Contact contact = new Contact(
-                    contactJson.getString("name"),
-                    contactJson.getString("phone"),
-                    contactJson.getString("email")
-            );
-            contacts[i] = contact;
+        contactStorage.deleteContact(contact.getName());
+        flowPane.getChildren().remove(cardContainer);
+        System.out.println("Deleted contact: " + contact.getName());
+    }
+    // Edit contact handler: open the edit form.
+    private void handleEditContact(Contact contact) {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ContactController.class.getResource("/fxml/AddContactView.fxml")));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
         }
-        allContacts = List.of(contacts);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        AddContactController addContactController = loader.getController();
+        addContactController.setNameField(contact.getName());
+        addContactController.setPhoneField(contact.getPhone());
+        addContactController.setEmailField(contact.getEmail());
+        addContactController.setHeadline("Edit Contact");
+        addContactController.setButtonText("Save");
+        addContactController.setButtonId("editContact");
+        stage.show();
+
+        // Set the action for the "Save" button
+        addContactController.button.setOnAction(event -> {
+            contact.setName(addContactController.nameField.getText());
+            contact.setPhone(addContactController.phoneField.getText());
+            contact.setEmail(addContactController.emailField.getText());
+            ContactStorage contactStorage = new ContactStorage();
+            List<Contact> contacts = contactStorage.loadContacts();
+            // Store the original name before editing
+            String originalName = contact.getName();
+
+            // Update the contact in the storage using the original name
+            for (int i = 0; i < contacts.size(); i++) {
+                if (contacts.get(i).getName().equalsIgnoreCase(originalName)) {
+                    contacts.set(i, contact);
+                    break;
+                }
+            }
+
+
+            // Save the updated list back to storage
+            try {
+                JSONArray updatedContacts = new JSONArray();
+                for (Contact c : contacts) {
+                    updatedContacts.put(c.toJson());
+                }
+                Files.write(Paths.get("contacts.json"), updatedContacts.toString(4).getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Close the edit window and refresh the UI
+            stage.close();
+            flowPane.getChildren().clear();
+            showContacts(contactStorage.loadContacts());
+        });
+
+
     }
 
-    // Filters the contacts based on the query and updates the FlowPane.
-    private void filterContacts(String query) {
-        // Clear existing cards in the UI.
-        flowPane.getChildren().clear();
 
-        // When query is empty, show all contacts.
-        if (query == null || query.trim().isEmpty()) {
-            showContacts(allContacts);
-        } else {
-            // Filter contacts by name (case-insensitive)
-            List<Contact> filtered = allContacts.stream()
-                    .filter(contact -> contact.getName().toLowerCase().contains(query.toLowerCase()))
-                    .collect(Collectors.toList());
-            showContacts(filtered);
-        }
-    }
-
-    // Utility method that adds a list of contacts to the FlowPane.
-    public void showContacts(List<Contact> contacts) {
-        for (Contact contact : contacts) {
-            AnchorPane cardContainer = createContactCard(contact);
-            updateContactCard(cardContainer);
-        }
-    }
-
-    // This method creates a single contact card (as an AnchorPane) for the given contact.
+    /// create a card container
     public AnchorPane createContactCard(Contact contact) {
         // Outer AnchorPane (the card)
         AnchorPane cardContainer = new AnchorPane();
@@ -175,67 +276,14 @@ public class ContactController {
         return cardContainer;
     }
 
-    // Add the card to the UI (FlowPane)
-    @FXML
-    public void updateContactCard(AnchorPane contactCard) {
-        flowPane.getChildren().add(contactCard);
-    }
-
-    // Handle the addition of a new contact (opens a new window)
-    @FXML
-    private void handleAddContact(ActionEvent event) throws Exception {
-        showAddContactView();
-    }
-
-    // Edit contact handler
-    private void handleEditContact(Contact contact) {
-        System.out.println("Editing contact: " + contact.getName());
-        // Add your editing logic here – for example, open a pre-filled form.
-    }
-
-    // Delete contact handler: remove from storage and UI.
-    private void handleDeleteContact(Contact contact, AnchorPane cardContainer) {
-        ContactStorage contactStorage = new ContactStorage();
-        contactStorage.deleteContact(contact.getName());
-        flowPane.getChildren().remove(cardContainer);
-        System.out.println("Deleted contact: " + contact.getName());
-    }
-
-    public List<Contact> getAllContacts() {
-        return allContacts;
-    }
 
 
-
-
-    /// show UI
-    public static void showAddContactView(){
-        try{
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ContactController.class.getResource("/view/addContactView.fxml")));
-            Parent root= loader.load();
-            loader.getController();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+    // Method to show contacts in the FlowPane
+    public void showContacts(List<Contact> contacts) {
+        for (Contact contact : contacts) {
+            AnchorPane cardContainer = createContactCard(contact);
+            flowPane.getChildren().add(cardContainer);
         }
     }
 
-
-    public static void showContactView() {
-        try{
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ContactController.class.getResource("/view/contactView.fxml")));
-            Parent root= loader.load();
-            loader.getController();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -15,6 +15,8 @@ public class Contact {
 
     }
 
+
+
     // Getters
     public String getName() {
         return name;
@@ -57,5 +59,13 @@ public class Contact {
         json.put("email", email);
 
         return json;
+    }
+
+    public static Contact fromJson(JSONObject contactJson) {
+        return new Contact(
+                contactJson.getString("name"),
+                contactJson.getString("phone"),
+                contactJson.getString("email")
+        );
     }
 }
